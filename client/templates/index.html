@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cutoff Marks Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+           display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff5f;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        select, input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Cutoff Marks Calculator</h1>
+
+    <form action="/calculate_cutoff" method="post">
+        <select name="domain" id="domain" onchange="displayFields()" required>
+            <option value="">Select Domain</option>
+            <option value="engineering">Engineering</option>
+            <option value="medical">Medical Science</option>
+            <option value="commerce">Commerce & Accounts</option>
+            <option value="law">Law</option>
+            <option value="mba">MBA</option>
+            <option value="msc">M.Sc.</option>
+        </select>
+
+        <div id="marksFields">
+            <!-- Dynamic fields will appear here -->
+        </div>
+
+        <select name="protocol" required>
+            <option value="">Select Protocol</option>
+            <option value="TCP">TCP</option>
+            <option value="UDP">UDP</option>
+        </select>
+
+        <button type="submit">Calculate Cutoff</button>
+    </form>
+    <div class="result" id="result">
+        {% if response %}
+            Calculated Cutoff: {{ response }}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function displayFields() {
+        const domain = document.getElementById("domain").value;
+        const marksFields = document.getElementById("marksFields");
+        marksFields.innerHTML = "";  // Clear previous fields
+
+        if (domain === "engineering") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="Physics Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Chemistry Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Math Marks (out of 100)" required>
+            `;
+        } else if (domain === "medical") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="Physics Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Chemistry Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Biology Marks (out of 100)" required>
+            `;
+        } else if (domain === "commerce") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="Math Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Economics Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Accountancy Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Business Studies Marks (out of 100)" required>
+            `;
+        } else if (domain === "law") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="English Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="History Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Political Science Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Other Subject Marks (out of 100)" required>
+            `;
+        } else if (domain === "mba") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="Entrance Exam Score (out of 300)" required>
+                <input type="number" name="marks[]" placeholder="Undergraduate Score (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Work Experience (in years)" required>
+            `;
+        } else if (domain === "msc") {
+            marksFields.innerHTML = `
+                <input type="number" name="marks[]" placeholder="Core Subject Marks (out of 100)" required>
+                <input type="number" name="marks[]" placeholder="Elective Subject Marks (out of 100)" required>
+            `;
+        }
+    }
+</script>
+
+</body>
+</html>
